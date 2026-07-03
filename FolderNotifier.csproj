@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\notes.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="SHDocVw">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>1</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>eab22ac0-30c1-11cf-a7eb-0000c05bae0b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\icon.ico" />
+    <Resource Include="Assets\notes.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.9" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.3" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Models\AppNote.cs">
+      <Generator>MSBuild:Compile</Generator>
+    </Compile>
+  </ItemGroup>
+
+	<ItemGroup>
+		<Resource Remove="Assets\icon.ico" />
+		<Resource Include="Assets\icon.ico" />
+	</ItemGroup>
+
+</Project>

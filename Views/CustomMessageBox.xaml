@@ -1,0 +1,106 @@
+﻿<Window x:Class="FolderNotifier.Views.CustomMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Message" Width="450" MinHeight="220" SizeToContent="Height"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Topmost="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
+
+    <Grid Margin="15">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="15" Opacity="0.15" ShadowDepth="5" Color="Black"/>
+        </Grid.Effect>
+
+        <Border Background="#FDFBF7" CornerRadius="12" BorderBrush="#D1C7B7" BorderThickness="1">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+                    <TextBlock x:Name="IconText" Text="ℹ️" FontSize="22" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TitleText" Text="Title" FontSize="18" FontWeight="Bold" Foreground="#2A1B19" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <TextBlock x:Name="MessageText" Grid.Row="1" FontSize="15" Foreground="#4A2C2A" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,25"/>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Button x:Name="BtnNo" Content="No" Width="90" Height="36" Margin="0,0,10,0" Visibility="Collapsed" Cursor="Hand" Click="BtnNo_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#EBE3D5"/>
+                                <Setter Property="Foreground" Value="#4A2C2A"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#D1C7B7"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button x:Name="BtnYes" Content="Yes" Width="90" Height="36" Margin="0,0,10,0" Visibility="Collapsed" Cursor="Hand" Click="BtnYes_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#A84C40"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#8F3F35"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button x:Name="BtnOk" Content="OK" Width="90" Height="36" Visibility="Collapsed" Cursor="Hand" Click="BtnOk_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#A84C40"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#8F3F35"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
