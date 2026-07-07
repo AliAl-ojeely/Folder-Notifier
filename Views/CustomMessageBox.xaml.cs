@@ -15,7 +15,6 @@ namespace FolderNotifier.Views
             TitleText.Text = title;
             MessageText.Text = message;
 
-            // تحديد اتجاه النافذة وترجمة الأزرار بناءً على اللغة الحالية
             bool isArabic = Languages.CurrentLang == "AR";
             this.FlowDirection = isArabic ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 
@@ -23,7 +22,6 @@ namespace FolderNotifier.Views
             BtnYes.Content = isArabic ? "نعم" : "Yes";
             BtnNo.Content = isArabic ? "لا" : "No";
 
-            // إعداد الأيقونة
             switch (image)
             {
                 case MessageBoxImage.Information:
@@ -43,7 +41,6 @@ namespace FolderNotifier.Views
                     break;
             }
 
-            // إعداد الأزرار المعروضة
             switch (button)
             {
                 case MessageBoxButton.OK:

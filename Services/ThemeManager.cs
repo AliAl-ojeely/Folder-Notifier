@@ -18,6 +18,8 @@ namespace FolderNotifier.Services
                 res["BorderBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#5C4233"));
                 res["AccentBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C66D5D"));
                 res["HoverBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4F3627"));
+
+                res["EmojiGlowColor"] = (Color)ColorConverter.ConvertFromString("#FFFFFF");
             }
             else
             {
@@ -28,6 +30,8 @@ namespace FolderNotifier.Services
                 res["BorderBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D1C7B7"));
                 res["AccentBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A84C40"));
                 res["HoverBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FCFAF5"));
+
+                res["EmojiGlowColor"] = Colors.Transparent;
             }
         }
     }

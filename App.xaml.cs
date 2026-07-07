@@ -30,20 +30,18 @@ namespace FolderNotifier
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            AppSettings.LoadSettings();
+            Languages.CurrentLang = AppSettings.Current.Language;
+
             bool createdNew;
             _mutex = new Mutex(true, MutexName, out createdNew);
 
-            // Check if launched via Context Menu
             bool isContextMenuLaunch = e.Args.Length >= 2 && e.Args[0] == "-show";
             string targetPath = isContextMenuLaunch ? e.Args[1] : string.Empty;
 
             if (!createdNew)
             {
-                // If already running, send command and exit
-                if (isContextMenuLaunch)
-                {
-                    SendPathToRunningInstance(targetPath);
-                }
+                if (isContextMenuLaunch) SendPathToRunningInstance(targetPath);
                 Environment.Exit(0);
                 return;
             }
@@ -69,12 +67,10 @@ namespace FolderNotifier
 
             if (isContextMenuLaunch)
             {
-                // Launch silently in System Tray and show the requested note
                 ShowNoteForPath(targetPath);
             }
             else
             {
-                // Normal launch, show the MainWindow
                 ShowMainWindow();
             }
         }

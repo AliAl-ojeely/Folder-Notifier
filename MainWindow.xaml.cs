@@ -36,7 +36,14 @@ namespace FolderNotifier.Views
 
                 if (Application.Current is App app)
                 {
-                    app.ShowNotification("Folder Notifier", "The application is still running in the background. You can access it from the system tray.");
+                    bool isArabic = FolderNotifier.Services.Languages.CurrentLang == "AR";
+
+                    string title = "Folder Notifier";
+                    string message = isArabic
+                        ? "التطبيق لا يزال يعمل في الخلفية. يمكنك الوصول إليه من شريط المهام بجانب الساعة."
+                        : "The application is still running in the background. You can access it from the system tray.";
+
+                    app.ShowNotification(title, message);
                 }
             }
             else

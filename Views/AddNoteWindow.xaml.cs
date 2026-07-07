@@ -49,21 +49,18 @@ namespace FolderNotifier.Views
 
             if (string.IsNullOrWhiteSpace(path))
             {
-                // استبدال MessageBox بـ CustomMessageBox
                 CustomMessageBox.Show(Languages.Get("MissingFolderMsg"), Languages.Get("MissingFolderTitle"), MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(body))
             {
-                // استبدال MessageBox بـ CustomMessageBox
                 CustomMessageBox.Show(Languages.Get("ValidationEmptyMsg"), Languages.Get("ValidationTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             _dbService.CreateOrUpdateNote(path, title, body);
 
-            // استبدال MessageBox بـ CustomMessageBox
             CustomMessageBox.Show(Languages.Get("SuccessMsg"), Languages.Get("SuccessTitle"), MessageBoxButton.OK, MessageBoxImage.Information);
             this.DialogResult = true;
             this.Close();

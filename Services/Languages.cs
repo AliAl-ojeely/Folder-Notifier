@@ -14,7 +14,7 @@ namespace FolderNotifier.Services
                     // MainWindow Texts
                     { "AppTitle", "My Folder Notes" },
                     { "NotesCount", "{0} Notes" },
-                    { "RefreshBtn", "🔄 Refresh" },
+                    { "RefreshBtn", "Refresh" },
                     { "AddNoteBtn", "Add Note" },
                     { "EmptyTitle", "No folder notes found." },
                     { "EmptySub", "Click 'Add Note' to create your first note." },
@@ -52,7 +52,7 @@ namespace FolderNotifier.Services
                 {
                     { "AppTitle", "ملاحظات المجلدات" },
                     { "NotesCount", "{0} ملاحظات" },
-                    { "RefreshBtn", "🔄 تحديث" },
+                    { "RefreshBtn", "تحديث" },
                     { "AddNoteBtn", "إضافة ملاحظة" },
                     { "EmptyTitle", "لا توجد ملاحظات." },
                     { "EmptySub", "انقر على 'إضافة ملاحظة' لإنشاء ملاحظتك الأولى." },
