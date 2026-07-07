@@ -50,7 +50,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="Ali Al-ojeely (Frontend and Desktop Application Developer)" Foreground="#2A1B19" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,12"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="App Version:" FontWeight="Bold" Foreground="#6E5C5A" Margin="0,0,0,12"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="1.0" Foreground="#2A1B19" Margin="0,0,0,12"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="1.2" Foreground="#2A1B19" Margin="0,0,0,12"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Email:" FontWeight="Bold" Foreground="#6E5C5A" Margin="0,0,0,12"/>
                     <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,0,0,12">

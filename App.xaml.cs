@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Pipes;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
 using System.Windows.Controls;
@@ -20,14 +24,36 @@ namespace FolderNotifier
         private string _lastPath = string.Empty;
         private Dictionary<string, AppNote?> _cache = new(StringComparer.OrdinalIgnoreCase);
 
+        private static Mutex? _mutex;
+        private const string MutexName = "FolderNotifier_SingleInstance_Mutex";
+        private const string PipeName = "FolderNotifier_NamedPipe";
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            bool createdNew;
+            _mutex = new Mutex(true, MutexName, out createdNew);
+
+            // Check if launched via Context Menu
+            bool isContextMenuLaunch = e.Args.Length >= 2 && e.Args[0] == "-show";
+            string targetPath = isContextMenuLaunch ? e.Args[1] : string.Empty;
+
+            if (!createdNew)
+            {
+                // If already running, send command and exit
+                if (isContextMenuLaunch)
+                {
+                    SendPathToRunningInstance(targetPath);
+                }
+                Environment.Exit(0);
+                return;
+            }
+
             base.OnStartup(e);
 
+            StartPipeServer();
             _dbService = new DatabaseService();
 
             _currentPopup = new NoteWindow();
-
             _currentPopup.Opacity = 0;
             _currentPopup.Show();
             _currentPopup.HideNote();
@@ -39,8 +65,18 @@ namespace FolderNotifier
 
             InitializeSystemTray();
 
-            _mainWindow = new MainWindow();
-            _mainWindow.Show();
+            ThemeManager.ApplyTheme(AppSettings.Current.Theme);
+
+            if (isContextMenuLaunch)
+            {
+                // Launch silently in System Tray and show the requested note
+                ShowNoteForPath(targetPath);
+            }
+            else
+            {
+                // Normal launch, show the MainWindow
+                ShowMainWindow();
+            }
         }
 
         private void OnFolderChanged(string? path)
@@ -57,6 +93,17 @@ namespace FolderNotifier
 
             _lastPath = path;
 
+            if (!AppSettings.Current.IsAutoPopupEnabled)
+            {
+                Application.Current.Dispatcher.InvokeAsync(() => _currentPopup?.HideNote());
+                return;
+            }
+
+            ShowNoteForPath(path);
+        }
+
+        private void ShowNoteForPath(string path)
+        {
             if (!_cache.TryGetValue(path, out var note))
             {
                 note = _dbService?.GetNoteByPath(path);
@@ -80,6 +127,44 @@ namespace FolderNotifier
             });
         }
 
+        private void StartPipeServer()
+        {
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        using var server = new NamedPipeServerStream(PipeName, PipeDirection.In);
+                        await server.WaitForConnectionAsync();
+
+                        using var reader = new StreamReader(server);
+                        string? requestedPath = await reader.ReadLineAsync();
+
+                        if (!string.IsNullOrWhiteSpace(requestedPath))
+                        {
+                            ShowNoteForPath(requestedPath);
+                        }
+                    }
+                    catch { }
+                }
+            });
+        }
+
+        private void SendPathToRunningInstance(string path)
+        {
+            try
+            {
+                using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
+                client.Connect(1000);
+
+                using var writer = new StreamWriter(client);
+                writer.WriteLine(path);
+                writer.Flush();
+            }
+            catch { }
+        }
+
         public void ClearNoteCache()
         {
             _cache.Clear();
@@ -92,13 +177,19 @@ namespace FolderNotifier
             _notifyIcon.IconSource = new System.Windows.Media.Imaging.BitmapImage(new Uri("pack://application:,,,/Assets/icon.ico"));
 
             var menu = new ContextMenu();
-            var openItem = new MenuItem { Header = "Open Folder Notifier" };
+
+            bool isArabic = Languages.CurrentLang == "AR";
+            var openItem = new MenuItem { Header = isArabic ? "فتح التطبيق" : "Open Folder Notifier" };
             openItem.Click += (s, args) => ShowMainWindow();
-            var exitItem = new MenuItem { Header = "Exit App" };
+
+            var exitItem = new MenuItem { Header = isArabic ? "إغلاق التطبيق" : "Exit App" };
             exitItem.Click += (s, args) => ShutdownApplication();
+
             menu.Items.Add(openItem);
             menu.Items.Add(new Separator());
             menu.Items.Add(exitItem);
+
+            menu.FlowDirection = isArabic ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 
             _notifyIcon.ContextMenu = menu;
             _notifyIcon.TrayMouseDoubleClick += (s, args) => ShowMainWindow();
@@ -119,6 +210,7 @@ namespace FolderNotifier
         {
             _watcher?.Stop();
             _notifyIcon?.Dispose();
+            _mutex?.ReleaseMutex();
 
             if (_mainWindow != null)
             {

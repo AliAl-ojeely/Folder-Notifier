@@ -34,19 +34,19 @@ The application runs quietly in the background from the **System Tray**, require
 
 ## Features
 
-- **Folder-based Notes** – Attach notes to any folder on your computer.
-- **Automatic Popup** – Notes appear immediately when the folder is opened.
-- **Runs in Background** – Lives silently inside the Windows System Tray.
-- **Smart Folder Monitoring** – Efficient Explorer detection with minimal CPU usage.
-- **Bilingual UI** – Full English & Arabic support.
-- **RTL/LTR Support** – Automatically switches layout depending on the selected language.
-- **SQLite Database** – Notes are stored locally inside the user's AppData folder.
-- **Custom Message Window** – Modern popup instead of the classic Windows MessageBox.
-- **Remember Window Position** – Floating notes remember their last screen location.
-- **Always On Top** – Important notes stay visible while working.
-- **Drag & Move** – Move popup notes anywhere on the screen.
-- **Privacy First** – No telemetry, no analytics, no cloud synchronization.
-- **Completely Offline** – Internet connection is never required.
+* **Folder-based Notes** – Attach notes to any folder on your Windows system.
+* **Context Menu Integration** – Trigger notes directly from the Windows right-click menu ("Show Folder Note").
+* **Optional Auto-Popup** – Full control over whether notes appear automatically or only upon user request.
+* **Settings & Personalization** – Easily customize your language and toggle between Light/Dark Mode.
+* **Runs in Background** – Resides silently in the Windows System Tray.
+* **Smart Folder Monitoring** – Efficient Explorer detection with near-zero CPU usage.
+* **Bilingual UI** – Full English & Arabic support.
+* **RTL/LTR Support** – The UI automatically adjusts layout based on the selected language.
+* **SQLite Database** – Notes are stored securely and locally inside your AppData folder.
+* **Modern Popup Windows** – Custom message windows replacing legacy dialogs.
+* **Floating Notes** – Draggable, "Always-on-Top" notes that remember their screen position.
+* **Privacy First** – Zero telemetry, no analytics, no cloud synchronization.
+* **Completely Offline** – Internet connection is never required.
 
 ---
 
@@ -123,18 +123,21 @@ FolderNotifier
 ├── Models
 │   └── AppNote.cs
 │
-├── Services
+├── Services/
 │   ├── DatabaseService.cs
 │   ├── ExplorerHelper.cs
 │   ├── Languages.cs
 │   ├── ShellWatcherService.cs
-│   └── SettingsService.cs
+│   ├── SettingsService.cs
+│   ├── ThemeManager.cs
+│   └── ContextMenuService.cs
 │
-├── Views
+├── Views/
 │   ├── AddNoteWindow.xaml
 │   ├── CustomMessageBox.xaml
 │   ├── DeveloperInfo.xaml
 │   ├── MainWindow.xaml
+│   ├── SettingsWindow.xaml
 │   └── NoteWindow.xaml
 │
 ├── App.xaml

@@ -20,7 +20,11 @@ namespace FolderNotifier.Views
         {
             InitializeComponent();
             _dbService = new DatabaseService();
+
+            ThemeManager.ApplyTheme(AppSettings.Current.Theme);
+
             LoadData();
+            UpdateLanguageUI();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -146,8 +150,7 @@ namespace FolderNotifier.Views
             this.FlowDirection = Languages.CurrentLang == "AR" ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 
             AppTitleText.Text = Languages.Get("AppTitle");
-            LangToggleBtn.Content = Languages.Get("LangToggle");
-            RefreshBtn.Content = Languages.Get("RefreshBtn");
+            RefreshBtnText.Text = Languages.Get("RefreshBtn");
             AddNoteBtnText.Text = Languages.Get("AddNoteBtn");
 
             EmptyTitleText.Text = Languages.Get("EmptyTitle");
@@ -158,16 +161,27 @@ namespace FolderNotifier.Views
             UpdateUIState();
         }
 
-        private void LangToggleBtn_Click(object sender, RoutedEventArgs e)
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-            Languages.CurrentLang = Languages.CurrentLang == "EN" ? "AR" : "EN";
-            UpdateLanguageUI();
+            LoadData();
         }
 
         private void AboutBtn_Click(object sender, RoutedEventArgs e)
         {
             var devInfo = new DeveloperInfo();
+            devInfo.Owner = this;
             devInfo.ShowDialog();
+        }
+
+        private void SettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Owner = this;
+
+            if (settingsWindow.ShowDialog() == true)
+            {
+                UpdateLanguageUI();
+            }
         }
     }
 }
