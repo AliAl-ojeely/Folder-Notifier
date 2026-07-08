@@ -73,8 +73,8 @@ namespace FolderNotifier.Views
             }
             else
             {
-                this.Left = SystemParameters.WorkArea.Width - this.Width - 20;
-                this.Top = SystemParameters.WorkArea.Height - this.Height - 20;
+                this.Left = (SystemParameters.WorkArea.Width - this.Width) / 8;
+                this.Top = (SystemParameters.WorkArea.Height - this.Height) / 8;
             }
         }
 
