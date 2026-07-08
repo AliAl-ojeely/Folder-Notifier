@@ -60,6 +60,18 @@ The application runs quietly in the background from the **System Tray**, require
 
 ---
 
+## Inno Setup script
+
+If you want to take a look at the Folder Notifier Setup Script, here is the Repo for Inno Setup Scripts:
+
+```bash
+https://github.com/AliAl-ojeely/InnoSetup-Game-Installer-Template/tree/main
+```
+
+You will find it under the FolderNotifier.iss name file
+
+---
+
 ## Installation
 
 ### Download Release
