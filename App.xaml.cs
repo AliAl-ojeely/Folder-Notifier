@@ -41,7 +41,14 @@ namespace FolderNotifier
 
             if (!createdNew)
             {
-                if (isContextMenuLaunch) SendPathToRunningInstance(targetPath);
+                if (isContextMenuLaunch)
+                {
+                    SendPathToRunningInstance(targetPath);
+                }
+                else
+                {
+                    SendPathToRunningInstance("SHOW_MAIN_WINDOW");
+                }
                 Environment.Exit(0);
                 return;
             }
@@ -135,11 +142,18 @@ namespace FolderNotifier
                         await server.WaitForConnectionAsync();
 
                         using var reader = new StreamReader(server);
-                        string? requestedPath = await reader.ReadLineAsync();
+                        string? requestedMessage = await reader.ReadLineAsync();
 
-                        if (!string.IsNullOrWhiteSpace(requestedPath))
+                        if (!string.IsNullOrWhiteSpace(requestedMessage))
                         {
-                            ShowNoteForPath(requestedPath);
+                            if (requestedMessage == "SHOW_MAIN_WINDOW")
+                            {
+                                Application.Current.Dispatcher.Invoke(() => ShowMainWindow());
+                            }
+                            else
+                            {
+                                ShowNoteForPath(requestedMessage);
+                            }
                         }
                     }
                     catch { }
@@ -197,9 +211,16 @@ namespace FolderNotifier
             {
                 _mainWindow = new MainWindow();
             }
+
             _mainWindow.Show();
-            _mainWindow.WindowState = WindowState.Normal;
+
+            if (_mainWindow.WindowState == WindowState.Minimized)
+            {
+                _mainWindow.WindowState = WindowState.Normal;
+            }
+
             _mainWindow.Activate();
+            _mainWindow.Focus();
         }
 
         private void ShutdownApplication()
